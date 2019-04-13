@@ -11,3 +11,21 @@ exports.getQuotes = function (request, response) {
         });
 }
 
+exports.getPopularQuotes = function (request, response) {
+    quoteModel.find({}).sort({ "likes_count": -1 }).exec((err, resultSet) => {
+        resultSet = resultSet.filter(result => result.text.length < 100);
+        response.send(resultSet);
+    })
+}
+
+exports.getQuotesByAuthor = function (request, response) {
+    const authorName = request.query.authorName;
+    quoteModel.find({ "author": authorName })
+        .exec((err, resultSet) => {
+            if (err) {
+                response.send(err);
+            }
+            resultSet = resultSet.filter(result => result.text.length < 100);
+            response.send(resultSet);
+        })
+}

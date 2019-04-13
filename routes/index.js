@@ -12,6 +12,10 @@ router.get('/', (req, res) => {
 /* GET All Quotes */
 router.get('/getQuotes', quotes.getQuotes);
 
+router.get('/getPopularQuotes', quotes.getPopularQuotes);
+
+router.get('/author', quotes.getQuotesByAuthor);
+
 router.post('/insertQuote', (req, res) => {
     const newQuote = new quoteModel({
         _id: new mongoose.Types.ObjectId(),
@@ -25,5 +29,7 @@ router.post('/insertQuote', (req, res) => {
         .then(res.status(200).json({ status: "Inserted Successfully" }))
         .catch(res.status(500).json({ status: "Failed operation : Insertion" }));
 })
+
+
 
 module.exports = router;
